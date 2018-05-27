@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>POTZEE</title>
+    <link href="css/main.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div class="container" id="main">
+        <div class="container" id="header">
+            <h1>POTZEE</h1>
+        </div>
+        <div class="container" id="body">
+            Player Name: 
+            <input type="text" placeholder="Player Name" id="player-name" maxlength="10">
+            <input type="button" value="Add" id="add-player">
+        </label>
+            <div id="root"></div>
+        </div>
+    </div>
+
+    <template id="index-app-template">
+        <section id="start-game-section"></section>
+        <section id="add-players-section" class="border"></section>
+    </template>
+
+    <template id="start-game-template">
+        <input type="submit" id="start-game" value="Start Game!">
+    </template>
+
+    <template id="add-players-template">
+        <span></span>
+    </template>
+    
+</body>
+<script src="js/StartGame.js"></script>
+<script src="js/AddPlayer.js"></script>
+<script src="js/IndexApp.js"></script>
+<script src="index.js"></script>
+</html>

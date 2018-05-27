@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>POTZEE</title>
+    <link href="css/main.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div class="container" id="main">
+        <div class="container" id="header">
+            <h1>POTZEE</h1>
+        </div>
+        <div class="container" id="body">
+            <input type="button" id="roll" value="ROLL!">
+            <div id="root"></div>
+    </div>
+
+
+    <!-- APP TEMPLATE -->
+    <template id="app-template">
+        <section id="dice-section"></section>
+        <section id="score-section"></section>
+    </template>
+    
+    <!-- DICE TEMPLATE -->
+    <template id="dice-template">
+        <img>
+        <img>
+        <img>
+        <img>
+        <img>
+    </template>
+
+    <!-- SCORE TEMPLATE -->
+    <template id="score-template">
+        <table>
+            <thead>
+                <tr>
+                    <td>Players</td>
+                    <!-- Players -->
+                </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot>
+                <tr></tr>
+                <tr></tr>
+            </tfoot>
+        </table>
+    </template>
+
+
+</body>
+
+<script src="js/roll.js"></script>
+<script src="js/diceNumLocations.js"></script>
+<script src="js/GameDice.js"></script>
+<script src="js/DiceApp.js"></script>
+
+<script src="js/ScoringSystem.js"></script>
+<script src="js/Player.js"></script>
+<script src="js/scoreChoices.js"></script>
+<script src="js/ScoreCard.js"></script>
+
+<script src="js/GameApp.js"></script>
+
+<script src="game.js"></script>
+</html>
