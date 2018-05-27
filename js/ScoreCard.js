@@ -16,6 +16,23 @@ class ScoreCard {
         }
     }
 
+    updateTopTotals(players, currentPlayer) {
+        let playerNow = players[currentPlayer];
+        let tempScore = 0;
+        for(let i = 0; i < 6; i++) {
+            if(playerNow.completedChoices[i] > 0) {
+                tempScore += playerNow.completedChoices[i] + 1;
+            }
+        }
+        if(tempScore >= 63 && !playerNow.topBonus) {
+            playerNow.score += 35;
+            playerNow.topBonus = true;
+        }
+        let row = document.getElementById('top-totals');
+        let td = row.querySelectorAll('td');
+        td[currentPlayer + 1].textContent = tempScore;
+    }
+
     playerGlow(currentPlayer) {
         const td = this.headRow.querySelectorAll('td');
         td[currentPlayer].style.color = 'blue';
@@ -25,16 +42,6 @@ class ScoreCard {
         const td = this.headRow.querySelectorAll('td');
         td[currentPlayer].style.color = 'black';
     }
-
-    // constructor(players, currentPlayer, ScoringSystem, nextTurn, rollButton, turn, startRound) {
-    //     this.players = players;
-    //     this.currentPlayer = currentPlayer;
-    //     this.ScoringSystem = ScoringSystem;
-    //     this.nextTurn = nextTurn;
-    //     this.rollButton = rollButton;
-    //     this.turn = turn;
-    //     this.startRound = startRound;
-    // }
 
     renderHead() {
         for(let i = 0; i < this.players.length; i++) {
@@ -48,17 +55,24 @@ class ScoreCard {
         for(let i = 0; i < scoreChoices.length; i++) {
             const row = this.body.insertRow(0);
             row.id = 'score-choice-' + i;
+            if(i === 6) {
+                row.id = 'top-totals';
+            }
             // Players.length is +1 to account for the scoreChoices
             for(let j = 0; j < this.players.length + 1; j++) {
                 const td = row.insertCell();
                 if(j === 0) {
                     td.textContent = scoreChoices[i];
-                    td.classList.add('choices');
+                    if(i !== 6) {
+                        td.classList.add('choices');
+                    }
                 }
                 else {
                     td.id = 'player-' + j + '-score-' + i;
-                    // console.log('td listen', this.tdListener);
                     td.addEventListener('click', this.tdListener);
+                }
+                if(i === 6 && j !== 0) {
+                    td.textContent = 0;
                 }
                 row.appendChild(td);
             }
@@ -69,9 +83,8 @@ class ScoreCard {
     renderFoot() {
         for(let i = 0; i < this.players.length + 1; i++) {
             this.totalsTd[i] = this.feet[0].insertCell();
-            this.totalsTd[i].classList.add('totals');
             if(i === 0) {
-                this.totalsTd[i].textContent = 'Totals';
+                this.totalsTd[i].textContent = 'Total';
             } else {
                 this.totalsTd[i].id = 'total-' + i;
                 this.totalsTd[i].textContent = this.players[i - 1].score;

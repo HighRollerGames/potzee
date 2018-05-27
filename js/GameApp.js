@@ -86,17 +86,14 @@ class GameApp {
         this.DiceApp.update();
     }
 
-    calcTotals() {
-
-        for(let i = 0; i < this.players.length; i++) {
-            // Someting
-        }
-    }
-
     nextTurn() {
-        this.ScoreCard.playerUnglow(this.currentPlayer + 1);
         this.rollButton.disabled = false;
-        this.ScoreCard.updateTopTotal(this.players[this.currentPlayer]);
+
+        this.ScoreCard.playerUnglow(this.currentPlayer + 1);
+        if(!this.players[this.currentPlayer].topBonus) {
+            this.ScoreCard.updateTopTotals(this.players, this.currentPlayer);
+        }
+
         this.currentPlayer++;
         if(this.currentPlayer >= this.players.length) {
             this.currentPlayer = 0;

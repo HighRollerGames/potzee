@@ -12,16 +12,6 @@ class ScoringSystem {
         }
     }
 
-    checkTopSore(currentPlayer) {
-        let tempScore = 0;
-        for(let i = 0; i < 6; i++) {
-            tempScore += currentPlayer.completedChoices[i];
-        }
-        if(tempscore >= 63) {
-            playerScore;
-        }
-    }
-
     checkScore(index, potzee, currentRoll) {
         let score = 0;
         let roll = [];
@@ -75,7 +65,7 @@ class ScoringSystem {
                     score = parseInt(roll.filter(a => a === 6).reduce((b, c) => b + c));
                 }
                 break;
-            case 6:     // Three of a Kind
+            case 7:     // Three of a Kind
                 if(roll.filter(a => roll.filter(b => b === a).length >= 3).length < 3) {
                     score = 0;
                 }
@@ -83,7 +73,7 @@ class ScoringSystem {
                     score = parseInt(roll.reduce((a, b) => a + b));
                 }
                 break;
-            case 7:     // Four of a Kind
+            case 8:     // Four of a Kind
                 if(roll.filter(a => roll.filter(b => b === a).length >= 4).length < 4) {
                     score = 0;
                 }
@@ -91,7 +81,7 @@ class ScoringSystem {
                     score = parseInt(roll.reduce((a, b) => a + b));
                 }
                 break;
-            case 8:     // Full House
+            case 9:     // Full House
                 roll.sort((a, b) => b - a);
                 if(roll.filter(a => a === roll[0]).length === 2 && roll.filter(a => a === roll[4]).length === 3 || roll.filter(a => a === roll[0]).length === 3 && roll.filter(a => a === roll[4]).length === 2) {
                     score += 25;
@@ -100,7 +90,7 @@ class ScoringSystem {
                     score = 0;
                 }
                 break;
-            case 9:     // Small Straight
+            case 10:     // Small Straight
                 roll = roll.filter((a, b) => {
                     return roll.indexOf(a) === b;
                 });
@@ -112,7 +102,7 @@ class ScoringSystem {
                     score = 0;
                 }
                 break;
-            case 10:    // Large Straight
+            case 11:    // Large Straight
                 roll.sort((a, b) => a - b);
                 if(parseInt(roll[0]) === parseInt(roll[4]) - 4) {
                     score += 40;
@@ -121,7 +111,7 @@ class ScoringSystem {
                     score = 0;
                 }
                 break;
-            case 11:    // Potzee
+            case 12:    // Potzee
                 if(roll.filter(a => roll.filter(b => b === a).length === 5).length < 5) {
                     score = 0;
                 }
@@ -134,7 +124,7 @@ class ScoringSystem {
                     }
                 }
                 break;
-            case 12:    // Chance
+            case 13:    // Chance
                 score = roll.reduce((a, b) => (parseInt(a) + parseInt(b)));
                 break;
             default:

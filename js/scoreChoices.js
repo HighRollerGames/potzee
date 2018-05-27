@@ -7,6 +7,7 @@ const scoreChoices = [
     ['4s'],
     ['5s'],
     ['6s'],
+    ['poT Total'],
     ['Three of a Kind'],
     ['Four of a Kind'],
     ['Full House'],
