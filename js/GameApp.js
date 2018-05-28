@@ -136,6 +136,7 @@ class GameApp {
     }
 
     endGame() {
+        this.rollButton.disabled = false;
         this.rollButton.value = 'Play again?';
         this.gameIsFinished = true;
         let tempScore = 0;
