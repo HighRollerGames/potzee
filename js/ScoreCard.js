@@ -11,34 +11,78 @@ class ScoreCard {
     }
 
     updateTotals() {
-        for(let i = 0; i < this.players.length; i++) {
-            this.totalsTd[i + 1].textContent = this.players[i].score;
+        for(let i = 1; i < this.players.length; i++) {
+            this.totalsTd[i].textContent = this.players[i].score;
         }
     }
 
+    updateTopTotals(currentPlayer) {
+        let playerNow = this.players[currentPlayer];
+        let tempScore = 0;
+        let row = document.getElementById('top-totals');
+        let td = row.querySelectorAll('td');
+        for(let i = 0; i < 6; i++) {
+            if(parseInt(playerNow.completedChoices[i]) > 0) {
+                tempScore += playerNow.completedChoices[i];
+            }
+        }
+        if(tempScore >= 63 && !playerNow.topBonus) {
+            playerNow.score += 35;
+            playerNow.topBonus = true;
+            td[currentPlayer].classList.add('score-glow');
+        }
+        td[currentPlayer].textContent = tempScore;
+    }
+
+    updatePotzee(currentPlayer) {
+        let row = this.body.querySelectorAll('tr');
+        let td = row[12].querySelectorAll('td');
+        td[currentPlayer].classList.add('potzee-glow');
+    }
+
+    updateDoublePotzee(currentPlayer) {
+        let row = this.body.querySelectorAll('tr');
+        let td = row[12].querySelectorAll('td');
+        td[currentPlayer].classList.add('double-potzee-glow');
+    }
+
+    possibleScores() {
+
+    }
+
+    checkPlayerFinished(currentPlayer) {
+        return this.players[currentPlayer].completedChoices.filter(a => a >= 0).length === 13;
+    }
+
+    winnerGlow(winner) {
+        const footTd = this.footRow.querySelectorAll('td');
+        footTd[winner].classList.toggle('winner');
+    }
+
     playerGlow(currentPlayer) {
-        const td = this.headRow.querySelectorAll('td');
-        td[currentPlayer].style.color = 'blue';
+        for(let i = 0; i < scoreChoices.length; i++) {
+            const row = this.body.querySelectorAll('tr');
+            const tempTd = row[i].querySelectorAll('td');
+            if(i !== 6) {
+                tempTd[currentPlayer].classList.toggle('current-player');
+            }
+        }
     }
 
     playerUnglow(currentPlayer) {
-        const td = this.headRow.querySelectorAll('td');
-        td[currentPlayer].style.color = 'black';
+        for(let i = 0; i < scoreChoices.length; i++) {
+            const row = this.body.querySelectorAll('tr');
+            const tempTd = row[i].querySelectorAll('td');
+            if(i !== 6) {
+                tempTd[currentPlayer].classList.toggle('current-player');
+            }
+        }
     }
 
-    // constructor(players, currentPlayer, ScoringSystem, nextTurn, rollButton, turn, startRound) {
-    //     this.players = players;
-    //     this.currentPlayer = currentPlayer;
-    //     this.ScoringSystem = ScoringSystem;
-    //     this.nextTurn = nextTurn;
-    //     this.rollButton = rollButton;
-    //     this.turn = turn;
-    //     this.startRound = startRound;
-    // }
-
     renderHead() {
-        for(let i = 0; i < this.players.length; i++) {
-            const td = this.headRow.insertCell(1);
+        for(let i = 1; i < this.players.length; i++) {
+            console.log('score card palyers', this.players[i]);
+            const td = this.headRow.insertCell(-1);
             td.id = 'player-' + i;
             td.textContent = this.players[i].name;
         }
@@ -48,17 +92,25 @@ class ScoreCard {
         for(let i = 0; i < scoreChoices.length; i++) {
             const row = this.body.insertRow(0);
             row.id = 'score-choice-' + i;
+            if(i === 6) {
+                row.id = 'top-totals';
+            }
             // Players.length is +1 to account for the scoreChoices
-            for(let j = 0; j < this.players.length + 1; j++) {
+            for(let j = 0; j < this.players.length; j++) {
                 const td = row.insertCell();
                 if(j === 0) {
                     td.textContent = scoreChoices[i];
-                    td.classList.add('choices');
+                    if(i !== 6) {
+                        td.classList.add('choices');
+                    }
                 }
                 else {
                     td.id = 'player-' + j + '-score-' + i;
-                    // console.log('td listen', this.tdListener);
+                    td.classList.add('player-choice');
                     td.addEventListener('click', this.tdListener);
+                }
+                if(i === 6 && j !== 0) {
+                    td.textContent = 0;
                 }
                 row.appendChild(td);
             }
@@ -67,14 +119,13 @@ class ScoreCard {
     }
 
     renderFoot() {
-        for(let i = 0; i < this.players.length + 1; i++) {
+        for(let i = 0; i < this.players.length; i++) {
             this.totalsTd[i] = this.feet[0].insertCell();
-            this.totalsTd[i].classList.add('totals');
             if(i === 0) {
-                this.totalsTd[i].textContent = 'Totals';
+                this.totalsTd[i].textContent = 'Total';
             } else {
                 this.totalsTd[i].id = 'total-' + i;
-                this.totalsTd[i].textContent = this.players[i - 1].score;
+                this.totalsTd[i].textContent = this.players[i].score;
             }
         }
     }

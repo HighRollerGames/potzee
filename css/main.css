@@ -8,6 +8,33 @@
     }
 }
 
+@keyframes score-glow {
+    from {
+        text-shadow: 0 0 0 black;
+    }
+    to {
+        text-shadow: 0 0 6px black;
+    }
+}
+
+@keyframes dice-glow {
+    from {
+        background-color: darkcyan;
+    }
+    to {
+        background-color: rgb(0, 100, 100);
+    }
+}
+
+@keyframes potzee-glow {
+    from {
+        background-color: yellow;
+    }
+    to {
+        background-color: darkgoldenrod;
+    }
+}
+
 /* ELEMENTS */
 body {
     background-color: darkgreen;
@@ -20,7 +47,7 @@ body {
 }
 
 input {
-    /* font-size: 2rem; */
+    font-size: 2rem;
     margin: 13px auto;
 }
 
@@ -36,9 +63,9 @@ img {
     border-right: 3px solid gray;
     border-bottom: 3px solid gray;
     border-left: 3px solid black;
-    background: darkcyan;
     border-radius: 6px;
     padding: 6px;
+    animation: dice-glow 3s alternate infinite;
 }
 
 table {
@@ -50,7 +77,7 @@ table {
     font-size: 1rem;
 }
 
-thead, tfoot {
+thead, tfoot, #top-totals {
     background-color: rgb(207, 207, 207);
     color: black;
     font-weight: bold;
@@ -92,15 +119,56 @@ td {
     font-size: 2rem;    
 }
 
-/* body * {
-    border: 1px solid red;
-    font-size: 2rem;
-} */
-
 .choices {
     background-color: wheat;
     color: black;
 }
+
+.player-choice {
+    cursor: pointer;
+}
+
+.score-glow {
+    color: yellow;
+    animation: score-glow 1s alternate infinite;
+}
+
+.winner {
+    color: black;
+    animation: potzee-glow 1s ease-in-out alternate infinite !important;
+}
+
+.current-player {
+    color: white;
+    background-color: darkcyan;
+    animation: dice-glow 500ms ease-in-out alternate infinite;
+}
+
+.current-player:hover {
+    background-color: lightskyblue;
+    color: black;
+    animation: none;
+}
+
+.not-current-player {
+    color: black;
+    background-color: wheat;
+    animation: none;
+}
+
+.potzee-glow {
+    color: lime !important;
+    animation: score-glow 1s alternate infinite;
+}
+
+.double-potzee-glow {
+    animation: potzee-glow 3s alternate infinite !important;
+}
+
+/* body * {
+    border: 1px solid red;
+    font-size: 2rem;
+} */
 
 /* IDS */
 #main {

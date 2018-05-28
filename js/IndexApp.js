@@ -9,14 +9,13 @@ class IndexApp {
         this.players = [];
     }
 
-    // Dom is still fragmented :-/
-
     render() {
         this.dom = indexAppTemplate.content;
         this.addPlayerSection = this.dom.getElementById('add-players-section');
         this.startGameSection = this.dom.getElementById('start-game-section');
         this.dom.appendChild(this.startGameSection);
         this.dom.appendChild(this.addPlayerSection);
+        document.getElementById('player-name').focus();
         document.getElementById('add-player').addEventListener('click', (e) => {
             e.preventDefault();
 
@@ -30,6 +29,7 @@ class IndexApp {
             this.players.push(name);
             let player = new AddPlayer(name);
             document.getElementById('player-name').value = '';
+            document.getElementById('player-name').focus();
 
             if(this.players.length === 2) {
                 const Start = new StartGame(this.players);

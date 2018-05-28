@@ -8,10 +8,6 @@ class DiceApp {
         this.GameDice = [];
     }
 
-    addScoreApp(scoreApp) {
-        this.scoreApp = scoreApp;
-    }
-
     reset() {
         for(let i = 0; i < 5; i++) {
             this.GameDice[i].hold = false;
