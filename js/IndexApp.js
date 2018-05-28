@@ -16,6 +16,12 @@ class IndexApp {
         this.dom.appendChild(this.startGameSection);
         this.dom.appendChild(this.addPlayerSection);
         document.getElementById('player-name').focus();
+        document.getElementById('player-name').addEventListener('keyup', (e) => {
+            e.preventDefault();
+            if(e.keyCode === 13) {
+                document.getElementById('add-player').click();
+            }
+        });
         document.getElementById('add-player').addEventListener('click', (e) => {
             e.preventDefault();
 
