@@ -15,11 +15,18 @@ class DiceApp {
     }
 
     update() {
-        for(let i = 0; i < 5; i++) {
-            if(!this.GameDice[i].hold) {
-                this.GameDice[i].randomize();
-            }
-        }
+        this.GameDice[0].randomize(parseInt(prompt()));
+        this.GameDice[1].randomize(parseInt(prompt()));
+        this.GameDice[2].randomize(parseInt(prompt()));
+        this.GameDice[3].randomize(parseInt(prompt()));
+        this.GameDice[4].randomize(parseInt(prompt()));
+
+
+        // for(let i = 0; i < 5; i++) {
+        //     if(!this.GameDice[i].hold) {
+        //         this.GameDice[i].randomize();
+        //     }
+        // }
     }
 
     render() {

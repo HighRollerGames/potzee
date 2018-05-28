@@ -8,8 +8,10 @@ class Player {
         this.score = 0;
         this.potzee = false;
         this.completedChoices = [];
-        for(let i = 0; i < scoreChoices.length; i++) {
-            this.completedChoices.push(-1);
+        for(let i = 0; i <= scoreChoices.length; i++) {
+            if(i !== 6) {
+                this.completedChoices.push(-1);
+            }
         }
     }
 }

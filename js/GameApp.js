@@ -10,6 +10,7 @@ class GameApp {
         this.turn = 0;
         this.currentPlayer = 0;
 
+        // Handles user 'rolls'
         this.rollButton = document.getElementById('roll');
         this.rollButton.addEventListener('click', (e) => {
             e.preventDefault();
@@ -21,32 +22,39 @@ class GameApp {
             }
             this.turn++;
             // SAVE THIS FOR DISPLAYING POSSIBLE SCORES
-            // for(let i = 0; i < scoreChoices.length; i++) {
-            //     this.ScoringSystem.checkScore(i, this.players[this.currentPlayer].potzee, this.players[this.currentPlayer].currentRoll);
 
-            // }
         });
+
+        // Handles user score choice(s)
         this.tdListener = (e) => {
             e.preventDefault();
             let tempPlayer = parseInt(e.path[0].id.split('-')[1] - 1);
             let tempScoreType = parseInt(e.path[0].id.split('-')[3]);
-            let tempScore = parseInt(this.ScoringSystem.checkScore(tempScoreType, this.players[this.currentPlayer].potzee, this.players[this.currentPlayer].currentRoll, this.players[this.currentPlayer]));
-            if(this.currentPlayer === tempPlayer && this.players[this.currentPlayer].completedChoices[tempScoreType] === -1) {
+            let playerNow = this.players[this.currentPlayer];
+            // This is the top totals row
+            if(tempScoreType === 6) {
+                return;
+            }
+            // Has it been chosen already?
+            let tempScore = parseInt(this.ScoringSystem.checkScore(tempScoreType, playerNow.potzee, playerNow.currentRoll, playerNow));
+            if(this.currentPlayer === tempPlayer && playerNow.completedChoices[tempScoreType] === -1) {
                 if(tempScore === 50) {
-                    this.players[this.currentPlayer].potzee = true;
+                    playerNow.potzee = true;
                 }
                 this.turn = 0;
-                this.players[this.currentPlayer].completedChoices[tempScoreType] += tempScore;
-                this.players[this.currentPlayer].score += tempScore;
+                playerNow.completedChoices[tempScoreType] = tempScore;
+                playerNow.score += tempScore;
                 e.path[0].textContent = tempScore;
                 this.nextTurn();
-            } else if(this.currentPlayer === tempPlayer && tempScoreType === 11 && tempScore === 100) {
-                e.path[0].textContent = tempScore;
+            // Is it another Potzee?
+            } else if(this.currentPlayer === tempPlayer && tempScoreType === 12 && tempScore === 100) {
                 this.turn = 0;
-                this.players[this.currentPlayer].completedChoices[tempScoreType] = tempScore;
-                this.players[this.currentPlayer].score += tempScore;
+                playerNow.completedChoices[tempScoreType] += tempScore;
+                playerNow.score += tempScore;
+                e.path[0].textContent = playerNow.completedChoices[tempScoreType];
                 this.nextTurn();
             }
+            // Go home, you're drunk
             else {
                 return;
             }
@@ -64,7 +72,7 @@ class GameApp {
 
         this.ScoringSystem = new ScoringSystem();
         this.renderPlayers();
-        this.ScoreCard = new ScoreCard(this.tdListener, this.players);
+        this.ScoreCard = new ScoreCard(this.tdListener, this.players, this.currentPlayer);
         this.scoreSection.appendChild(this.ScoreCard.render());
 
         this.startRound();
@@ -88,15 +96,17 @@ class GameApp {
 
     nextTurn() {
         this.rollButton.disabled = false;
-
-        this.ScoreCard.playerUnglow(this.currentPlayer + 1);
-        if(!this.players[this.currentPlayer].topBonus) {
-            this.ScoreCard.updateTopTotals(this.players, this.currentPlayer);
-        }
+        let tempPlayer = this.currentPlayer;
 
         this.currentPlayer++;
         if(this.currentPlayer >= this.players.length) {
             this.currentPlayer = 0;
+        }
+
+        this.ScoreCard.playerUnglow(tempPlayer - 1);
+        console.log('temp player', tempPlayer, 'current', this.currentPlayer);
+        if(!this.players[this.currentPlayer].topBonus) {
+            this.ScoreCard.updateTopTotals(tempPlayer);
         }
         this.ScoreCard.updateTotals();
         this.startRound();

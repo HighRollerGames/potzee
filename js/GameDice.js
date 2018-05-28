@@ -8,8 +8,9 @@ class GameDice {
         this.hold = false;
     }
 
-    randomize() {
-        this.diceValue = parseInt(Math.random() * 6);
+    randomize(i) {
+        // this.diceValue = parseInt(Math.random() * 6);
+        this.diceValue = i;
         this.diceImg.src = diceNumLocations[this.diceValue];
     }
 

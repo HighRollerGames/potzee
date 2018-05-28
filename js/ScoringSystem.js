@@ -95,7 +95,7 @@ class ScoringSystem {
                     return roll.indexOf(a) === b;
                 });
                 roll.sort((a, b) => a - b);
-                if(parseInt(roll[0]) === parseInt(roll[3]) - 3) {
+                if(parseInt(roll[0]) === (parseInt(roll[3]) - 3) || parseInt(roll[1]) === (parseInt(roll[4]) - 3)) {
                     score += 30;
                 }
                 else {

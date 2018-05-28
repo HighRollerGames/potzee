@@ -8,6 +8,24 @@
     }
 }
 
+@keyframes score-glow {
+    from {
+        text-shadow: 0 0 0 black;
+    }
+    to {
+        text-shadow: 0 0 6px black;
+    }
+}
+
+@keyframes dice-glow {
+    from {
+        background-color: darkcyan;
+    }
+    to {
+        background-color: rgb(0, 100, 100);
+    }
+}
+
 /* ELEMENTS */
 body {
     background-color: darkgreen;
@@ -36,9 +54,9 @@ img {
     border-right: 3px solid gray;
     border-bottom: 3px solid gray;
     border-left: 3px solid black;
-    background: darkcyan;
     border-radius: 6px;
     padding: 6px;
+    animation: dice-glow 3s alternate infinite;
 }
 
 table {
@@ -92,15 +110,31 @@ td {
     font-size: 2rem;    
 }
 
-/* body * {
-    border: 1px solid red;
-    font-size: 2rem;
-} */
-
 .choices {
     background-color: wheat;
     color: black;
 }
+
+.score-glow {
+    color: yellow;
+    animation: score-glow 1s alternate infinite;
+}
+
+.current-player {
+    color: white;
+    animation: score-glow 1s alternate infinite;
+}
+
+.not-current-player {
+    color: black;
+    animation: nothing 1s forwards;
+}
+@keyframes nothing {}
+
+/* body * {
+    border: 1px solid red;
+    font-size: 2rem;
+} */
 
 /* IDS */
 #main {

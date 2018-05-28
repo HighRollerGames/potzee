@@ -16,31 +16,52 @@ class ScoreCard {
         }
     }
 
-    updateTopTotals(players, currentPlayer) {
-        let playerNow = players[currentPlayer];
+    updateTopTotals(currentPlayer) {
+        let playerNow = this.players[currentPlayer];
         let tempScore = 0;
+        let row = document.getElementById('top-totals');
+        let td = row.querySelectorAll('td');
         for(let i = 0; i < 6; i++) {
-            if(playerNow.completedChoices[i] > 0) {
-                tempScore += playerNow.completedChoices[i] + 1;
+            if(parseInt(playerNow.completedChoices[i]) > 0) {
+                tempScore += playerNow.completedChoices[i];
             }
         }
         if(tempScore >= 63 && !playerNow.topBonus) {
             playerNow.score += 35;
             playerNow.topBonus = true;
+            td[currentPlayer + 1].classList.add('score-glow');
         }
-        let row = document.getElementById('top-totals');
-        let td = row.querySelectorAll('td');
         td[currentPlayer + 1].textContent = tempScore;
+    }
+
+    possibleScores() {
+
     }
 
     playerGlow(currentPlayer) {
         const td = this.headRow.querySelectorAll('td');
-        td[currentPlayer].style.color = 'blue';
+        for(let i = 0; i < scoreChoices.length; i++) {
+            const row = this.body.querySelectorAll('tr');
+            const tempTd = row[i].querySelectorAll('td');
+            if(i !== 6) {
+                tempTd[currentPlayer].classList.add('current-player');
+            }
+            td[currentPlayer].classList.add('current-player');
+            td[currentPlayer].classList.remove('not-current-player');
+        }
     }
 
     playerUnglow(currentPlayer) {
         const td = this.headRow.querySelectorAll('td');
-        td[currentPlayer].style.color = 'black';
+        for(let i = 0; i < scoreChoices.length; i++) {
+            const row = this.body.querySelectorAll('tr');
+            const tempTd = row[i].querySelectorAll('td');
+            if(i !== 6) {
+                tempTd[currentPlayer].classList.add('not-current-player');
+            }
+            td[currentPlayer].classList.add('not-current-player');
+            td[currentPlayer].classList.remove('current-player');
+        }
     }
 
     renderHead() {
