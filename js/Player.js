@@ -2,11 +2,11 @@
 /* exported Player */
 
 class Player {
-    constructor(name, currentRoll) {
+    constructor(name) {
         this.name = name;
-        this.currentRoll = currentRoll;
         this.score = 0;
         this.potzee = false;
+        this.finished = false;
         this.completedChoices = [];
         for(let i = 0; i <= scoreChoices.length; i++) {
             if(i !== 6) {

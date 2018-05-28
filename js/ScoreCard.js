@@ -11,8 +11,8 @@ class ScoreCard {
     }
 
     updateTotals() {
-        for(let i = 0; i < this.players.length; i++) {
-            this.totalsTd[i + 1].textContent = this.players[i].score;
+        for(let i = 1; i < this.players.length; i++) {
+            this.totalsTd[i].textContent = this.players[i].score;
         }
     }
 
@@ -29,44 +29,60 @@ class ScoreCard {
         if(tempScore >= 63 && !playerNow.topBonus) {
             playerNow.score += 35;
             playerNow.topBonus = true;
-            td[currentPlayer + 1].classList.add('score-glow');
+            td[currentPlayer].classList.add('score-glow');
         }
-        td[currentPlayer + 1].textContent = tempScore;
+        td[currentPlayer].textContent = tempScore;
+    }
+
+    updatePotzee(currentPlayer) {
+        let row = this.body.querySelectorAll('tr');
+        let td = row[12].querySelectorAll('td');
+        td[currentPlayer].classList.add('potzee-glow');
+    }
+
+    updateDoublePotzee(currentPlayer) {
+        let row = this.body.querySelectorAll('tr');
+        let td = row[12].querySelectorAll('td');
+        td[currentPlayer].classList.add('double-potzee-glow');
     }
 
     possibleScores() {
 
     }
 
+    checkPlayerFinished(currentPlayer) {
+        return this.players[currentPlayer].completedChoices.filter(a => a >= 0).length === 13;
+    }
+
+    winnerGlow(winner) {
+        const footTd = this.footRow.querySelectorAll('td');
+        footTd[winner].classList.toggle('winner');
+    }
+
     playerGlow(currentPlayer) {
-        const td = this.headRow.querySelectorAll('td');
         for(let i = 0; i < scoreChoices.length; i++) {
             const row = this.body.querySelectorAll('tr');
             const tempTd = row[i].querySelectorAll('td');
             if(i !== 6) {
-                tempTd[currentPlayer].classList.add('current-player');
+                tempTd[currentPlayer].classList.toggle('current-player');
             }
-            td[currentPlayer].classList.add('current-player');
-            td[currentPlayer].classList.remove('not-current-player');
         }
     }
 
     playerUnglow(currentPlayer) {
-        const td = this.headRow.querySelectorAll('td');
         for(let i = 0; i < scoreChoices.length; i++) {
             const row = this.body.querySelectorAll('tr');
             const tempTd = row[i].querySelectorAll('td');
             if(i !== 6) {
-                tempTd[currentPlayer].classList.add('not-current-player');
+                tempTd[currentPlayer].classList.toggle('current-player');
             }
-            td[currentPlayer].classList.add('not-current-player');
-            td[currentPlayer].classList.remove('current-player');
         }
     }
 
     renderHead() {
-        for(let i = 0; i < this.players.length; i++) {
-            const td = this.headRow.insertCell(1);
+        for(let i = 1; i < this.players.length; i++) {
+            console.log('score card palyers', this.players[i]);
+            const td = this.headRow.insertCell(-1);
             td.id = 'player-' + i;
             td.textContent = this.players[i].name;
         }
@@ -80,7 +96,7 @@ class ScoreCard {
                 row.id = 'top-totals';
             }
             // Players.length is +1 to account for the scoreChoices
-            for(let j = 0; j < this.players.length + 1; j++) {
+            for(let j = 0; j < this.players.length; j++) {
                 const td = row.insertCell();
                 if(j === 0) {
                     td.textContent = scoreChoices[i];
@@ -90,6 +106,7 @@ class ScoreCard {
                 }
                 else {
                     td.id = 'player-' + j + '-score-' + i;
+                    td.classList.add('player-choice');
                     td.addEventListener('click', this.tdListener);
                 }
                 if(i === 6 && j !== 0) {
@@ -102,13 +119,13 @@ class ScoreCard {
     }
 
     renderFoot() {
-        for(let i = 0; i < this.players.length + 1; i++) {
+        for(let i = 0; i < this.players.length; i++) {
             this.totalsTd[i] = this.feet[0].insertCell();
             if(i === 0) {
                 this.totalsTd[i].textContent = 'Total';
             } else {
                 this.totalsTd[i].id = 'total-' + i;
-                this.totalsTd[i].textContent = this.players[i - 1].score;
+                this.totalsTd[i].textContent = this.players[i].score;
             }
         }
     }

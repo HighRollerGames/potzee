@@ -26,6 +26,15 @@
     }
 }
 
+@keyframes potzee-glow {
+    from {
+        background-color: yellow;
+    }
+    to {
+        background-color: darkgoldenrod;
+    }
+}
+
 /* ELEMENTS */
 body {
     background-color: darkgreen;
@@ -38,7 +47,7 @@ body {
 }
 
 input {
-    /* font-size: 2rem; */
+    font-size: 2rem;
     margin: 13px auto;
 }
 
@@ -115,21 +124,46 @@ td {
     color: black;
 }
 
+.player-choice {
+    cursor: pointer;
+}
+
 .score-glow {
     color: yellow;
     animation: score-glow 1s alternate infinite;
 }
 
+.winner {
+    color: black;
+    animation: potzee-glow 1s ease-in-out alternate infinite !important;
+}
+
 .current-player {
     color: white;
-    animation: score-glow 1s alternate infinite;
+    background-color: darkcyan;
+    animation: dice-glow 500ms ease-in-out alternate infinite;
+}
+
+.current-player:hover {
+    background-color: lightskyblue;
+    color: black;
+    animation: none;
 }
 
 .not-current-player {
     color: black;
-    animation: nothing 1s forwards;
+    background-color: wheat;
+    animation: none;
 }
-@keyframes nothing {}
+
+.potzee-glow {
+    color: lime !important;
+    animation: score-glow 1s alternate infinite;
+}
+
+.double-potzee-glow {
+    animation: potzee-glow 3s alternate infinite !important;
+}
 
 /* body * {
     border: 1px solid red;
