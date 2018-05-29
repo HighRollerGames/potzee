@@ -1,10 +1,27 @@
 /* ANIMATIONS */
+@-webkit-keyframes title-glow {
+    from {
+        border: 6px dotted yellow;
+    }
+    to {
+        border: 6px dashed yellow;
+    }
+}
 @keyframes title-glow {
     from {
         border: 6px dotted yellow;
     }
     to {
         border: 6px dashed yellow;
+    }
+}
+
+@-webkit-keyframes score-glow {
+    from {
+        text-shadow: 0 0 0 black;
+    }
+    to {
+        text-shadow: 0 0 6px black;
     }
 }
 
@@ -17,12 +34,30 @@
     }
 }
 
+@-webkit-keyframes dice-glow {
+    from {
+        background-color: darkcyan;
+    }
+    to {
+        background-color: rgb(0, 100, 100);
+    }
+}
+
 @keyframes dice-glow {
     from {
         background-color: darkcyan;
     }
     to {
         background-color: rgb(0, 100, 100);
+    }
+}
+
+@-webkit-keyframes potzee-glow {
+    from {
+        background-color: yellow;
+    }
+    to {
+        background-color: darkgoldenrod;
     }
 }
 
@@ -41,20 +76,28 @@ body {
     color: white;
     padding: 0;
     margin: 0;
+    font-size: 32px;
     font-size: 2rem;
     background-image: url('../images/texture.png');
     background-repeat: repeat;
 }
 
 input {
+    font-size: 32px;
     font-size: 2rem;
     margin: 13px auto;
 }
 
 label {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
 
 img {
@@ -65,7 +108,8 @@ img {
     border-left: 3px solid black;
     border-radius: 6px;
     padding: 6px;
-    animation: dice-glow 3s alternate infinite;
+    -webkit-animation: dice-glow 3s alternate infinite;
+            animation: dice-glow 3s alternate infinite;
 }
 
 table {
@@ -74,6 +118,7 @@ table {
     background-color: white;
     border: 1px solid black;
     margin: auto;
+    font-size: 16px;
     font-size: 1rem;
 }
 
@@ -95,10 +140,17 @@ td {
 /* CLASSES */
 .container {
     margin: auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     text-align: center;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     width: 100%;
 }
 
@@ -110,12 +162,15 @@ td {
 }
 
 .index-player {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
     width: fit-content;
     background-color: darkgreen;
     padding: 13px;
     margin: 1px auto 3px auto;
     border: 1px solid black;
     box-shadow: 1px 1px 3px black;
+    font-size: 32px;
     font-size: 2rem;    
 }
 
@@ -130,39 +185,46 @@ td {
 
 .score-glow {
     color: yellow;
-    animation: score-glow 1s alternate infinite;
+    -webkit-animation: score-glow 1s alternate infinite;
+            animation: score-glow 1s alternate infinite;
 }
 
 .winner {
     color: black;
-    animation: potzee-glow 1s ease-in-out alternate infinite !important;
+    -webkit-animation: potzee-glow 1s ease-in-out alternate infinite !important;
+            animation: potzee-glow 1s ease-in-out alternate infinite !important;
 }
 
 .current-player {
     color: white;
     background-color: darkcyan;
-    animation: dice-glow 500ms ease-in-out alternate infinite;
+    -webkit-animation: dice-glow 500ms ease-in-out alternate infinite;
+            animation: dice-glow 500ms ease-in-out alternate infinite;
 }
 
 .current-player:hover {
     background-color: lightskyblue;
     color: black;
-    animation: none;
+    -webkit-animation: none;
+            animation: none;
 }
 
 .not-current-player {
     color: black;
     background-color: wheat;
-    animation: none;
+    -webkit-animation: none;
+            animation: none;
 }
 
 .potzee-glow {
     color: lime !important;
-    animation: score-glow 1s alternate infinite;
+    -webkit-animation: score-glow 1s alternate infinite;
+            animation: score-glow 1s alternate infinite;
 }
 
 .double-potzee-glow {
-    animation: potzee-glow 3s alternate infinite !important;
+    -webkit-animation: potzee-glow 3s alternate infinite !important;
+            animation: potzee-glow 3s alternate infinite !important;
 }
 
 /* body * {
@@ -172,6 +234,8 @@ td {
 
 /* IDS */
 #main {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
     width: fit-content;
     border: 6px solid darkgoldenrod;
     padding: 33px;
@@ -188,24 +252,38 @@ td {
 }
 
 #add-players-section {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     background-color: rgba(0, 0, 0, 0.5);
 }
 
 #add-player, #start-game {
+    font-size: 32px;
     font-size: 2rem;
 }
 
 #player-name {
+    font-size: 32px;
     font-size: 2rem;
     width: 100%;
 }
 
 #dice-form {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
 }
 
 #start-game {
