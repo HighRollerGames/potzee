@@ -46,8 +46,29 @@ class ScoreCard {
         td[currentPlayer].classList.add('double-potzee-glow');
     }
 
-    possibleScores() {
+    checkPossibleScores(currentPlayer, scoreType, score, newTurn) {
+        const row = this.body.querySelectorAll('tr');
+        const tempTd = row[scoreType].querySelectorAll('td');
+        if(newTurn && this.players[currentPlayer].completedChoices[scoreType] < 0) {
+            tempTd[currentPlayer].classList.toggle('possible-score');
+            tempTd[currentPlayer].classList.toggle('clear-possible-score');
+        }
+        if(score <= 0) {
+            tempTd[currentPlayer].textContent = '';
+        }
+        else {
+            tempTd[currentPlayer].textContent = score;
+        }
+    }
 
+    clearPossibleScores(currentPlayer, scoreType) {
+        const row = this.body.querySelectorAll('tr');
+        const tempTd = row[scoreType].querySelectorAll('td');
+        if(this.players[currentPlayer].completedChoices[scoreType] < 0) {
+            tempTd[currentPlayer].classList.toggle('clear-possible-score');
+            tempTd[currentPlayer].classList.toggle('possible-score');
+            tempTd[currentPlayer].textContent = '';
+        }
     }
 
     checkPlayerFinished(currentPlayer) {
@@ -60,8 +81,8 @@ class ScoreCard {
     }
 
     playerGlow(currentPlayer) {
+        const row = this.body.querySelectorAll('tr');
         for(let i = 0; i < scoreChoices.length; i++) {
-            const row = this.body.querySelectorAll('tr');
             const tempTd = row[i].querySelectorAll('td');
             if(i !== 6) {
                 tempTd[currentPlayer].classList.toggle('current-player');
@@ -70,8 +91,8 @@ class ScoreCard {
     }
 
     playerUnglow(currentPlayer) {
+        const row = this.body.querySelectorAll('tr');
         for(let i = 0; i < scoreChoices.length; i++) {
-            const row = this.body.querySelectorAll('tr');
             const tempTd = row[i].querySelectorAll('td');
             if(i !== 6) {
                 tempTd[currentPlayer].classList.toggle('current-player');
@@ -81,7 +102,6 @@ class ScoreCard {
 
     renderHead() {
         for(let i = 1; i < this.players.length; i++) {
-            console.log('score card palyers', this.players[i]);
             const td = this.headRow.insertCell(-1);
             td.id = 'player-' + i;
             td.textContent = this.players[i].name;
@@ -107,6 +127,9 @@ class ScoreCard {
                 else {
                     td.id = 'player-' + j + '-score-' + i;
                     td.classList.add('player-choice');
+                    if(i !== 6) {
+                        td.classList.add('clear-possible-score');
+                    }
                     td.addEventListener('click', this.tdListener);
                 }
                 if(i === 6 && j !== 0) {
