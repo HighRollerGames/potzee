@@ -180,6 +180,7 @@ td {
 }
 
 .player-choice {
+    color: black;
     cursor: pointer;
 }
 
@@ -193,6 +194,10 @@ td {
     color: black;
     -webkit-animation: potzee-glow 1s ease-in-out alternate infinite !important;
             animation: potzee-glow 1s ease-in-out alternate infinite !important;
+}
+
+.clear-possible-score {
+    color: black;
 }
 
 .current-player {
@@ -214,6 +219,11 @@ td {
     background-color: wheat;
     -webkit-animation: none;
             animation: none;
+}
+
+
+.possible-score {
+    color: gold;
 }
 
 .potzee-glow {

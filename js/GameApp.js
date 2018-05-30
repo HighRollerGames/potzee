@@ -1,4 +1,4 @@
-/* globals ScoreCard Player DiceApp ScoringSystem */
+/* globals ScoreCard Player DiceApp ScoringSystem scoreChoices */
 /* exported GameApp */
 
 const scoreAppTemplate = document.getElementById('app-template');
@@ -19,14 +19,13 @@ class GameApp {
                 window.location.replace('index.html');
             }
             this.DiceApp.update();
+            this.checkPossibleScores(false);
             if(this.turn === 1) {
                 this.rollButton.disabled = true;
                 // Button will be enabled once user confirms score choice
                 return;
             }
             this.turn++;
-            // SAVE THIS FOR DISPLAYING POSSIBLE SCORES
-
         });
 
         // Handles user score choice(s)
@@ -46,9 +45,10 @@ class GameApp {
                 return;
             }
 
-            console.log('plllayerNow', playerNow);
+            
             // Has it been chosen already?
             if(playerNow.completedChoices[tempScoreType] === -1) {
+                this.clearPossibleScores();
                 if(tempScore === 50) {
                     playerNow.potzee = true;
                     this.ScoreCard.updatePotzee(this.currentPlayer);
@@ -58,9 +58,10 @@ class GameApp {
                 playerNow.score += tempScore;
                 e.path[0].textContent = tempScore;
                 this.nextTurn();
-
-            // Is it another Potzee?
+                
+                // Is it another Potzee?
             } else if(this.currentPlayer === tempPlayer && tempScoreType === 12 && tempScore === 100) {
+                this.clearPossibleScores();
                 this.turn = 0;
                 this.ScoreCard.updateDoublePotzee(this.currentPlayer);
                 playerNow.completedChoices[tempScoreType] += tempScore;
@@ -74,6 +75,24 @@ class GameApp {
                 return;
             }
         };
+    }
+
+    checkPossibleScores(newTurn) {
+        for(let i = 0; i < scoreChoices.length; i ++) {
+            if(i === 6 || this.players[this.currentPlayer].completedChoices[i] >= 0) {
+                continue;
+            }
+            this.ScoreCard.checkPossibleScores(this.currentPlayer, i, this.ScoringSystem.checkScore(i, this.players[this.currentPlayer].potzee, this.currentRoll), newTurn);
+        }
+    }
+
+    clearPossibleScores() {
+        for(let i = 0; i < scoreChoices.length; i ++) {
+            if(i === 6) {
+                continue;
+            }
+            this.ScoreCard.clearPossibleScores(this.currentPlayer, i);
+        }
     }
 
     render() {
@@ -107,6 +126,7 @@ class GameApp {
         this.ScoreCard.playerGlow(this.currentPlayer);
         this.DiceApp.reset();
         this.DiceApp.update();
+        this.checkPossibleScores(true);
     }
 
     nextTurn() {
